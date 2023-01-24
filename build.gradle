@@ -1,17 +1,42 @@
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'io.freefair.lombok' version '6.0.0-m2'
 }
-
-group 'org.example'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def slf4jVersion = "1.7.32"
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation(
+            "io.rest-assured:rest-assured:5.3.0",
+            "org.projectlombok:lombok:1.18.24",
+            "org.assertj:assertj-core:3.24.2",
+            "com.fasterxml.jackson.core:jackson-core:2.14.1",
+            "com.fasterxml.jackson.core:jackson-databind:2.13.3",
+            "org.junit.jupiter:junit-jupiter:5.9.1",
+            "com.codeborne:selenide:6.10.1",
+            "org.aeonbits.owner:owner:1.0.12",
+            "org.slf4j:slf4j-simple:$slf4jVersion"
+    )
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
+    useJUnitPlatform()
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
 }
 
 test {
