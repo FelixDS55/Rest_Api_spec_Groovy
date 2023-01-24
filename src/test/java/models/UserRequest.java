@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class UserRequest {
     private Integer id;
     private String email;
     @JsonProperty("first_name")

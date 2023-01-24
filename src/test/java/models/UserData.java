@@ -12,13 +12,13 @@ public class UserData {
     String emailRequest = "janet.weaver@reqres.in";
     Integer idRequest = 2;
     @JsonProperty("data")
-    private User data;
+    private UserRequest data;
 
-    public User getData() {
+    public UserRequest getData() {
         return data;
     }
 
-    public void setData(User data) {
+    public void setData(UserRequest data) {
         this.data = data;
     }
 }
