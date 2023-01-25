@@ -1,5 +1,6 @@
 package tests;
 
+import io.restassured.specification.ResponseSpecification;
 import models.UserData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ public class UserDataTest {
         UserData data = Spec.request
                 .when()
                 .get("/users/2")
-                .then()
+                .then().spec(Spec.responseSpec200())
                 .log().all()
                 .extract().as(UserData.class);
 

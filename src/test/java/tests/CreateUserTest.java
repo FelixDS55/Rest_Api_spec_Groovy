@@ -1,14 +1,12 @@
 package tests;
 
+import io.restassured.specification.ResponseSpecification;
 import models.UserCreateRequest;
 import models.UserCreateResponse;
-import org.assertj.core.api.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import specs.Spec;
-import specs.SpecCreate;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CreateUserTest {
@@ -20,18 +18,19 @@ public class CreateUserTest {
         userCreate.setName("morpheus");
         userCreate.setJob("leader");
 
-        UserCreateResponse uC = SpecCreate.request
+        UserCreateResponse userCreateNew = Spec.request
                 .body(userCreate)
                 .when()
-                .post()
-                .then().log().all().extract().as(UserCreateResponse.class);
+                .post("/users")
+                .then().spec(Spec.responseSpec201())
+                .log().all().extract().as(UserCreateResponse.class);
 
-        assertThat(uC)
+        assertThat(userCreateNew)
                 .isNotNull()
                 .extracting(UserCreateResponse::getName)
                 .isEqualTo(userCreate.getName());
 
-        assertThat(uC)
+        assertThat(userCreateNew)
                 .isNotNull()
                 .extracting(UserCreateResponse::getJob)
                 .isEqualTo(userCreate.getJob());

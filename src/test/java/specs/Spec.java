@@ -1,5 +1,6 @@
 package specs;
 
+import io.restassured.RestAssured;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -14,9 +15,15 @@ public class Spec {
             .log().all()
             .contentType(ContentType.JSON);
 
-    public static ResponseSpecification requestSpec200(){
+    public static ResponseSpecification responseSpec200(){
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)
+                .build();
+    }
+
+    public static ResponseSpecification responseSpec201(){
+        return new ResponseSpecBuilder()
+                .expectStatusCode(201)
                 .build();
     }
 }
